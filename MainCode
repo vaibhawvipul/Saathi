@@ -1,0 +1,165 @@
+"""This code was written by Vipul Vaibhaw.
+  as a first year undergrad at Fergusson College, Pune.
+  Data entry is done from csv(Comma separaed values) files and also stores in csv file.
+  The department wanted output in Excel file, so I used .csv file.
+  This code was concieved and written in three days. SQL was not used intentionally."""
+  
+#create let12.csv , let3.csv, lem12.csv, lem3.csv and ac.csv to get this code work.
+
+from Tkinter import *
+import ScrolledText as tkst
+import math
+import sys
+
+
+#Defining Menu of this program
+def About():
+	
+	win = Tk()
+	win.wm_title("Credits")
+	frame1 = Frame(
+    	master = win,
+    	bg = '#FFFF66'
+		)
+	frame1.pack(fill='both', expand='yes')
+	editArea = tkst.ScrolledText(
+    	master = frame1,
+    	wrap   = WORD,
+    	width  = 30,
+		  height = 10
+	    )
+	#Don't use widget.place(), use pack or grid instead, since
+	# They behave better on scaling the window -- and you don't	
+	# have to calculate it manually!
+	editArea.pack(padx=10, pady=10, fill=BOTH, expand=True)
+	# Adding some text, to see if scroll is working as we expect it
+	editArea.insert(INSERT,
+	"""\
+	This Software was created by Vipul Vaibhaw in as a first year undergrad at Fergusson College,Pune. 
+	This software was programmed in Python 2.7 .
+	Tkinter was used to create GUI version.
+	For further details, vaibhaw.vipul@gmail.com, mail me.
+	""")
+	win.mainloop()
+#popup windows
+class popupWindow1(object):
+    def __init__(self,master):
+        top=self.top=Toplevel(master)
+        self.l1=Label(top,text="Enter Name")
+        self.l1.grid(row = 0 , column = 0,sticky = W)
+        self.e1=Entry(top)
+        self.e1.grid(row = 0 , column = 1)
+        self.l2=Label(top,text="Enter Contact Number")
+        self.l2.grid(row = 1 , column = 0)
+        self.e2=Entry(top)
+        self.e2.grid(row = 1 , column = 1)
+        self.lang = IntVar()
+        self.tim = IntVar()
+        self.r1=Radiobutton(top, text="English", variable=self.lang, value=1)
+        self.r1.grid(row = 2, column = 0,sticky = W)
+        self.r2=Radiobutton(top, text="Marathi", variable=self.lang, value=2)
+        self.r2.grid(row = 2, column = 1,sticky = W)
+        self.r3=Radiobutton(top, text="12-3", variable=self.tim, value=1)
+        self.r3.grid(row = 3, column = 0,sticky = W)
+        self.r4=Radiobutton(top, text="3-6", variable=self.tim, value=2)
+        self.r4.grid(row = 3, column = 1,sticky = W)
+        self.b=Button(top,text='Assign',command=self.cleanup)
+        self.b.grid(row = 4, columnspan=2)
+        
+    def cleanup(self):
+        self.value1=self.e1.get()
+        self.value2=self.e2.get()
+        num = int(self.value2)
+        self.value3 = self.lang.get()
+        self.value4 = self.tim.get()
+        if self.value3 == 1 and self.value4 == 1:
+        	with open('let12.csv', 'rb') as f:
+        		first_line = f.readline()
+        		print "\n%r  is assigned to %r" %(self.value1,first_line)
+        	with open('let12.csv', 'rb') as fin:
+        		data = fin.read().splitlines(True)
+        	with open('let12.csv', 'wb') as fout:
+        		fout.writelines(data[1:])
+        	with open('ac.csv', 'a') as dumb:
+        		dumb.write("\n%r,%r, %r" %(first_line,self.value1,self.value2))
+        elif self.value3 == 1 and self.value4 == 2:
+        	with open('let3.csv', 'rb') as f:
+        		first_line = f.readline()
+        		print "\n%r  is assigned to %r" %(self.value1,first_line)
+        	with open('let3.csv', 'rb') as fin:
+        		data = fin.read().splitlines(True)
+        	with open('let3.csv', 'wb') as fout:
+        		fout.writelines(data[1:])
+        	with open('ac.csv', 'wb') as dumb:
+        		dumb.write("\n%r,%r, %r" %(first_line,self.value1,self.value2))
+        elif self.value3 == 2 and self.value4 == 1 :
+        	with open('lem12.csv', 'rb') as f:
+        		first_line = f.readline()
+        		print "\n%r  is assigned to %r" %(self.value1,first_line)
+        	with open('lem12.csv', 'rb') as fin:
+        		data = fin.read().splitlines(True)
+        	with open('lem12.csv', 'wb') as fout:
+        		fout.writelines(data[1:])
+        	with open('ac.csv', 'wb') as dumb:
+        		dumb.write("\n%r,%r, %r" %(first_line,self.value1,self.value2))
+        elif self.value3 == 2 and self.value4 == 2:
+        	with open('lem3.csv', 'rb') as f:
+        		first_line = f.readline()
+        		print "\n%r  is assigned to %r" %(self.value1,first_line)
+        	with open('lem3.csv', 'rb') as fin:
+        		data = fin.read().splitlines(True)
+        	with open('lem3.csv', 'wb') as fout:
+        		fout.writelines(data[1:])#deleting first line of txt file
+        	with open('ac.csv', 'wb') as dumb:
+        		dumb.write("\n%r,%r, %r" %(first_line,self.value1,self.value2))
+        else:
+			print "\nWrong Input!"
+        self.top.destroy()
+
+#Main Program
+class mainWindow(object):
+    def __init__(self,master):
+        self.master=master
+        self.master.wm_title("Saathi")
+        self.master.geometry("500x300")
+        
+        #Adding Menu bar of my this program
+        self.menu = Menu(self.master)
+        self.master.config(menu=self.menu)
+        
+        self.submenu = Menu(self.menu)
+        
+        self.menu.add_cascade(label = "File", menu = self.submenu)
+        self.submenu.add_command(label = "Credits", command = About)
+        
+        frame1 = Frame(
+    		master = self.master,
+    		bg = '#8AB8E6'
+    		
+    		)
+    	frame1.pack(fill='both', expand='yes')
+        
+        self.l1=Label(frame1,text="SAATHI", font=("Helvetica", 24, 'bold'), fg = "#FF3300", bg = '#8AB8E6' )
+        self.l1.pack()
+        
+        self.l1=Label(frame1,text="created by Vipul Vaibhaw", font=("Helvetica", 12), fg = "#FF3300", bg = '#8AB8E6' )
+        self.l1.pack()
+        
+        self.button1=Button(frame1,text="Assign a Writer", relief = "flat",command=self.popup1)
+        self.button1.pack()
+        self.button2=Button(frame1,text="About",command=self.About)
+        self.button2.pack()
+        self.label = Label(frame1,text = "", bg = '#8AB8E6', font=("Helvetica", 16))
+        self.label.pack()
+    
+    def About(self):
+    	self.label.configure(text="\nThis software assigns writers to respective Blind candidates. \nThis is designed to help volunteers of \'SAATHI\'. ", bg = '#8AB8E6' )
+
+    def popup1(self):
+		self.w=popupWindow1(self.master)
+		self.master.wait_window(self.w.top)
+			
+        
+root=Tk()
+m=mainWindow(root)
+root.mainloop()
