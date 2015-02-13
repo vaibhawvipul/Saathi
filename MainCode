@@ -1,8 +1,8 @@
 """This code was written by Vipul Vaibhaw.
   as a first year undergrad at Fergusson College, Pune.
-  Data entry is done from csv(Comma separaed values) files and also stores in csv file.
+  Data entry is done from csv(Comma separated values) files and also stores in csv file.
   The department wanted output in Excel file, so I used .csv file.
-  This code was concieved and written in three days. SQL was not used intentionally."""
+  This code was conceived and written in three days. SQL was not used intentionally."""
   
 #create let12.csv , let3.csv, lem12.csv, lem3.csv and ac.csv to get this code work.
 
